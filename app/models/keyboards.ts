@@ -1,6 +1,6 @@
 type Key = {
   normal: string;
-  shift: string;
+  shift?: string;
   altGr?: string;
 };
 
@@ -20,7 +20,7 @@ let QWERTZ: Key[][] = [
     { normal: '0', shift: '=' , altGr: '}' },
     { normal: 'ß', shift: '?' , altGr: '\\' },
     { normal: '´', shift: '`' },
-    { normal: 'back', shift: 'back' }
+    { normal: 'back'}
   ],
   // Row 2
   [
@@ -51,11 +51,11 @@ let QWERTZ: Key[][] = [
     { normal: 'ö', shift: 'Ö' },
     { normal: 'ä', shift: 'Ä' },
     { normal: '#', shift: "'" },
-     { normal: 'Enter', shift: 'Enter', },
+     { normal: 'Enter', },
   ],
   // Row 4
   [
-    { normal: 'Shift', shift: 'Shift' },
+    { normal: 'Shift'},
     { normal: '<', shift: '>', altGr: '|' },
     { normal: 'y', shift: 'Y' },
     { normal: 'x', shift: 'X' },
@@ -67,18 +67,19 @@ let QWERTZ: Key[][] = [
     { normal: ',', shift: ';' },
     { normal: '.', shift: ':' },
     { normal: '-', shift: '_' },
-    { normal: 'Shift', shift: 'Shift' },
+    { normal: 'Shift' },
 
   ],
   
   // Row 6
   [
-    { normal: 'ctrl', shift: 'ctrl' },
-    { normal: 'win', shift: 'win' },
-    { normal: 'alt', shift: 'alt' },
-    { normal: ' ', shift: ' ' },
-    { normal: 'alt gr', shift: 'alt gr' },
-     { normal: 'ctrl', shift: 'ctrl' },
+    { normal: 'ctrl' },
+    { normal: 'win' },
+    { normal: 'alt'},
+    { normal: ' ' },
+    { normal: 'alt gr' },
+      { normal: 'win' },
+    { normal: 'ctrl' },
    
    
   ]
