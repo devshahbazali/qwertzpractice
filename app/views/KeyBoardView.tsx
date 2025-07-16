@@ -99,7 +99,7 @@
         return(
             <>
         <div
-  className={`font-medium m-5 rounded-2xl p-1 border-2 ${
+  className={`font-medium text-xl bg-gray-200 m-5 rounded-2xl p-1 border-2  ${
     error ? "border-red-500 animate-shake" : "border-gray-400"
   }`}
 >
