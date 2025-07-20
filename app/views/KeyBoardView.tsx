@@ -58,7 +58,16 @@ console.log('second useeffect value'+ savedIndex)
 }, []);
 
  
-
+function scrollLine(line:number){
+  for (let index = 0; index < line; index++) {
+     //scroll after completion of line
+       lessonDisplayRef.current?.scrollBy({
+            top: 28, // You can adjust this value to match 1 line
+            behavior: "smooth",
+          });
+  }
+    
+}
   // function to get the custom width for  the keys
   function getFaceWidth(face: string): string {
     switch (face) {
@@ -126,12 +135,9 @@ console.log('second useeffect value'+ savedIndex)
       setGreenLesson((prev) => prev + expectedChar);
       setBlackLesson((prev) => prev.slice(1)); // remove first char
       setError(false); // correct input
-       if (expectedChar === "\n") {
-    lessonDisplayRef.current?.scrollBy({
-      top: 30, // You can adjust this value to match 1 line
-      behavior: "smooth",
-    });
-  }
+    if (expectedChar === "\n") {
+        scrollLine(1)
+        }
 
 
     } else {
@@ -144,11 +150,14 @@ console.log('second useeffect value'+ savedIndex)
   function handleLessonChange(event: React.ChangeEvent<HTMLSelectElement>) {
     const index = parseInt(event.target.value, 10);
     setSelectedLessonIndex(index);
+    
     setGreenLesson("");
     setBlackLesson(LESSONS[index]);
+     keyboardRef.current?.focus();
   }
   return (
-    <>
+    <main className="flex flex-col items-center"> 
+   {/* div for lesson selection */}
       <div className="m-5 flex">
         <label className="font-bold mr-2">Wähle eine Lektion:</label>
         <select
@@ -163,21 +172,22 @@ console.log('second useeffect value'+ savedIndex)
           ))}
         </select>
       </div>
-
+ {/* div for lesson lessons*/}
       <div   ref={lessonDisplayRef} 
-        className={`font-medium text-xl h-40 px-4 bg-gray-200 mx-5 rounded-2xl p-1 border-2  whitespace-pre-wrap
+      style={{ width: keyboardRef.current?.offsetWidth }}
+        className={`font-medium text-xl  h-40 px-4 bg-gray-200 mx-52 rounded-2xl p-1 border-2  whitespace-pre-wrap
              overflow-scroll overflow-x-clip
             ${error ? "border-red-500 animate-shake" : "border-gray-400"}`}
       >
         <span className="text-green-600">{greenLesson}</span>
         <span>{blackLesson}</span>
       </div>
-
+ {/* div for keyboard layout*/}
       <div
         tabIndex={0} // Make div focusable
         onKeyDown={handleKeyDown}
         ref={keyboardRef}
-        className=" flex flex-col items-center rounded-3xl bg-black p-4 mx-5 my-2"
+        className=" flex flex-col items-center rounded-3xl bg-black p-4 mx-5 my-2 w-fit"
       >
         {QWERTZ.map((row, index) => (
           /*div for rows*/
@@ -187,7 +197,7 @@ console.log('second useeffect value'+ savedIndex)
               <div
                 key={index}
                 className={
-                  `active:bg-emerald-600 min-w-10  h-auto rounded p-1 m-1.5 ${getFaceWidth(
+                  `active:bg-emerald-600 min-w-12  h-auto rounded p-1 m-1.5 ${getFaceWidth(
                     face.normal
                   )} 
                                         ${
@@ -208,7 +218,7 @@ console.log('second useeffect value'+ savedIndex)
                   <div className=" text-xs">{face.shift ?? ""}</div>
                 ) : null}
                 <div className="flex justify-between items-baseline-last">
-                  <div className="text-lg font-bold grow ">{face.normal}</div>
+                  <div className="text-lg font-medium grow ">{face.normal}</div>
                   {face.altGr ? (
                     <div className=" text-xs">{face.altGr}</div>
                   ) : null}
@@ -218,6 +228,6 @@ console.log('second useeffect value'+ savedIndex)
           </div>
         ))}
       </div>
-    </>
+    </main>
   );
 }
