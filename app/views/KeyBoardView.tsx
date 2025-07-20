@@ -9,8 +9,9 @@ export default function KeyBoardView() {
   const [blackLesson, setBlackLesson] = useState("");
   const [keyPressed, setKeyPressed] = useState<string | null>(null);
   const keyboardRef = useRef<HTMLDivElement>(null);
+  const lessonDisplayRef = useRef<HTMLDivElement>(null);
   const [selectedLessonIndex, setSelectedLessonIndex] = useState<number>(-1);
- const didLoadFromStorage = useRef(false); // NEW: prevents overwrite on load
+ const didLoadFromStorage = useRef(false); 
   //focusing on the keyboard
   useEffect(() => {
     keyboardRef.current?.focus();
@@ -120,11 +121,19 @@ console.log('second useeffect value'+ savedIndex)
     setKeyPressed(normalized);
     // Check if user pressed correct key
     const expectedChar = blackLesson[0];
-   
+   console.log("enxpected is "+expectedChar+" given is "+normalized)
     if (normalized === expectedChar) {
       setGreenLesson((prev) => prev + expectedChar);
       setBlackLesson((prev) => prev.slice(1)); // remove first char
       setError(false); // correct input
+       if (expectedChar === "\n") {
+    lessonDisplayRef.current?.scrollBy({
+      top: 30, // You can adjust this value to match 1 line
+      behavior: "smooth",
+    });
+  }
+
+
     } else {
       setError(true); // wrong input
       // Optional: clear error after 500ms
@@ -155,7 +164,7 @@ console.log('second useeffect value'+ savedIndex)
         </select>
       </div>
 
-      <div
+      <div   ref={lessonDisplayRef} 
         className={`font-medium text-xl h-40 px-4 bg-gray-200 mx-5 rounded-2xl p-1 border-2  whitespace-pre-wrap
              overflow-scroll overflow-x-clip
             ${error ? "border-red-500 animate-shake" : "border-gray-400"}`}
