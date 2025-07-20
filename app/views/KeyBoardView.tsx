@@ -35,7 +35,7 @@ useEffect(() => {
   const savedIndex = localStorage.getItem("selectedLessonIndex");
   const savedGreen = localStorage.getItem("greenLesson");
   const savedBlack = localStorage.getItem("blackLesson");
-console.log('second useeffect value'+ savedIndex)
+
   // Only set state if values exist in localStorage
   if (savedIndex !== null) {   
     setSelectedLessonIndex(parseInt(savedIndex));
@@ -129,9 +129,7 @@ function scrollLine(line:number){
     const normalized = normalizeKey(event.key);
     setKeyPressed(normalized);
     // Check if user pressed correct key
-    const expectedChar = blackLesson[0];
-   console.log("enxpected is "+expectedChar+" given is "+normalized)
-    if (normalized === expectedChar) {
+    const expectedChar = blackLesson[0];    if (normalized === expectedChar) {
       setGreenLesson((prev) => prev + expectedChar);
       setBlackLesson((prev) => prev.slice(1)); // remove first char
       setError(false); // correct input
@@ -187,7 +185,8 @@ function scrollLine(line:number){
         tabIndex={0} // Make div focusable
         onKeyDown={handleKeyDown}
         ref={keyboardRef}
-        className=" flex flex-col items-center rounded-3xl bg-black p-4 mx-5 my-2 w-fit"
+        className={` flex flex-col items-center rounded-3xl bg-black p-4 mx-5 my-2 w-fit 
+          ${error?"shake":""}`}
       >
         {QWERTZ.map((row, index) => (
           /*div for rows*/
